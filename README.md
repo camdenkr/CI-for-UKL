@@ -41,8 +41,8 @@ Below is a description of the major components of our overall UKL CI system.**
     * Note: This is something we need to explore in greater detail. Initial exploration seems to suggest that booting QEMU in GitHub actions is best done using a Docker image (https://github.com/docker/setup-qemu-action), but this is something we will need to work on in-depth with our mentors as we design test scripts and mechanisms to extract the output from QEMU
 
 ![architecture diagram](./images/architecture-diagram.png)
-
-                                        Figure 1: Basic Overview of Architecture/Workflow
+                  
+                              Figure 1: Basic Overview of Architecture/Workflow
 
 <br></br>
 Figure 1 details the overall architecture and workflow of the UKL CI system. A push or pull request from a user on the unikernelLinux/linux repository (on branch 5.14) will trigger a GitHub action which will launch a Linux-based runner. This runner will subsequently clone all required repositories for building the UKL, install dependencies, and execute a Makefile to build the UKL as a bootable kernel image. This kernel image will then be used to boot a QEMU emulator. Upon booting, test scripts will be executed to check the output of the emulator (note: we are still working to define what tests and tools we will use, but have been provided with some initial pointers to tools such as qemu-sanity-check (https://people.redhat.com/~rjones/qemu-sanity-check/) for checking the ability of qemu to boot).  
