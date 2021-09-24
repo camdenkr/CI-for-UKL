@@ -65,6 +65,8 @@ Stretch goals for this project include:
 
 ## 6.  Release Planning:
 ** **
+Our Taiga Board can be found [here](https://tree.taiga.io/project/anqianqi1-csec528-fall-21-a-ci-for-development-of-ukl/timeline)
+
 Release #1: (Due 10/1)  
 Github Action to run a workflow that compiles the UKL repository, glibc, gcc and other dependencies whenever there is a push or a pull request to the UKL repository and return the workflow status to the user, which can be success if the patch pushed introduced no failures or a failure status if the patch caused the repository not to compile. 
 
