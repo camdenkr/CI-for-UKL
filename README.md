@@ -82,7 +82,7 @@ After delivering MVP (Releases 1-3), implement additional stretch targets as pri
 *In our conversations thus far with our mentor (Richard) he has emphasized the MVP as the most valuable feature. We’ve spoken about the other (stretch) goals, but plan to revisit these with him after delivering the MVP. Based on this conversation, we can subsequently implement whichever features will drive the most value for the UKL project in the time remaining. 
 
 ## Computing Resources we may need
-At the moment, we are operating on free-tier virtual machines for testing purposes and our initial plan is to use the machines running in GitHub for production. However, if we need to switch to self-hosted runners, we will need access to virtual machines (running Linux with 20GB disk) which can receive triggers from GitHub actions and subsequently run the all build and test scripts. 
+At the moment, we are operating on free-tier virtual machines for testing purposes and our initial plan is to use the machines running in GitHub for production. However, if we need to switch to self-hosted runners, we will need access to virtual machines (running Linux with atleast 20GB disk) which can receive triggers from GitHub actions and subsequently run the all build and test scripts. 
 
 
 
