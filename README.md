@@ -1,13 +1,12 @@
-# CI-for-UKL
+** **
+# A CI for Development of UKL
+** **
 Project Members:  
 - John Hunt | whunt@bu.edu  
 - Zhassulan Kaishentayev jassulan@bu.edu  
 - Camden Kronhaus | kronhaus@bu.edu  
 - Samantha Puterman | samanpg@bu.edu  
 
-** **
-# A CI for Development of UKL
-** **
 ## 1.   Vision and Goals Of The Project:
 
 The UKL CI will provide a system to support continuous integration for the development of the linux unikernel (UKL) open source project. High level goals of this project include:  
