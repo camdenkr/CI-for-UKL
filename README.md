@@ -15,7 +15,7 @@ The UKL CI will provide a system to support continuous integration for the devel
 
 ## 2. Users/Personas Of The Project:
 ** **
-The UKL CI will be used by all contributors to the open source UKL project who contribute to the <ins>UKL’s GitHub repository</ins> (https://github.com/unikernelLinux) via either a push or a pull request.
+The UKL CI will be used by all contributors to the open source UKL project who contribute to the [UKL’s GitHub repository](https://github.com/unikernelLinux/linux) via either a push or a pull request.
 
 Notably, it does not target:
 * Developers of non-UKL related projects
@@ -65,11 +65,11 @@ Stretch goals for this project include:
 
 ## 6.  Release Planning:
 ** **
-Release #1: (Due 10/1?)  
+Release #1: (Due 10/1)  
 Github Action to run a workflow that compiles the UKL repository, glibc, gcc and other dependencies whenever there is a push or a pull request to the UKL repository and return the workflow status to the user, which can be success if the patch pushed introduced no failures or a failure status if the patch caused the repository not to compile. 
 
 Release #2:  
-Launching a QEMU instance through a boot script with the compiled UKL as the kernel and testing that it boots correctly. Currently, the plan is to use the qemu-sanity-check tool (developed by Richard Jones). https://people.redhat.com/~rjones/qemu-sanity-check/
+Launching a QEMU instance through a boot script with the compiled UKL as the kernel and testing that it boots correctly. Currently, the plan is to use the [qemu-sanity-check tool](https://people.redhat.com/~rjones/qemu-sanity-check/) (developed by Richard Jones).
 
 Release #3:   
 Successfully create (or replicate) a battery of system tests to ensure that the UKL behaves as expected while running in QEMU. Develop shell scripts to compare the output of the system tests to the expected output results. If they are not as expected, the Github Action should fail. 
@@ -81,6 +81,6 @@ After delivering MVP (Releases 1-3), implement additional stretch targets as pri
 
 ## Computing Resources we may need
 At the moment, we are operating on free-tier virtual machines for testing purposes and our initial plan is to use the machines running in GitHub for production. However, if we need to switch to self-hosted runners, we will need access to virtual machines which can receive triggers from GitHub actions and subsequently run the all build and test scripts. 
-## General Comments
+
 
 
