@@ -1,4 +1,9 @@
 # CI-for-UKL
+Project Members:  
+- John Hunt | whunt@bu.edu  
+- Zhassulan Kaishentayev jassulan@bu.edu  
+- Camden Kronhaus | kronhaus@bu.edu  
+- Samantha Puterman | samanpg@bu.edu  
 
 ** **
 # A CI for Development of UKL
