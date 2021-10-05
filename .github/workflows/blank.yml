@@ -27,7 +27,7 @@ jobs:
 
       # Build dockerfile
       - name: build container
-      - run: docker build /home/ubuntu/CI-for-UKL/docker-stuff/ -t hello-container
+      - run: docker build ./docker-stuff/ -t hello-container
       
       # Run image
       - name: run container
