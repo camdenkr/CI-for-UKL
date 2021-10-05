@@ -29,6 +29,6 @@ jobs:
       - name: build container
         run: docker build ./docker-stuff/ -t hello-container
       
-      # Run image
+      # Run images
       - name: run container
         run: docker run hello-container
