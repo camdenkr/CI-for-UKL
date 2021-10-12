@@ -91,7 +91,4 @@ At the moment, we are operating on free-tier virtual machines for testing purpos
 
 Sprint 1: https://drive.google.com/file/d/1uyXb03ig_F_Q8udL5lgs5sNOPHZjnRgZ/view?usp=sharing
 
-Sprint 2: 
-
-
-
+Sprint 2: https://drive.google.com/file/d/159fcWlAx-YyuqLVU3G0UOF5Mf6WIg77E/view?usp=sharing
