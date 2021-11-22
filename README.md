@@ -23,17 +23,23 @@ Notably, it does not target:
 ## 3.   Scope and Features Of The Project:
 
 ** **
-The UKL CI will consist primarily of a series of workflow scripts (written in .yaml as this is the markup language used by GitHUb workflows) which are automatically triggered by GitHub Actions whenever pushes or pull requests are initiated in the repository (specifically on the current development branch, ukl-5.14). These scripts will include: 
-* A reusable "Set-Up: Script (which can be used by all unit tests) which fetches all repositories required for the unikernel compilation (unikernelLinux/ukl, unikernelLinux/linux, unikernelLinux/Linux-Configs, unikernelLinux/min-initrd, unikernelLinux/glibc, gcc-mirror/gcc)
-* Individual workflow scripts which launch each test as a "job" on a separate "runner" (a virtual machine which may be either hosted by GitHub via Azure or in the MOC for some specific tests). Each "job" will:
-   * Build and compile the UKL and its dependencies. 
-   * Run a shell script which will boot QEMU with the UKL and check that the output of the test program is correct.
+The UKL CI will consist primarily of a series of workflow scripts (written in .yaml as this is the markup language used by GitHub t configure workflows within GitHub actions) which are automatically triggered by GitHub Actions whenever pushes or pull requests are initiated in the repository (specifically on the current development branch, ukl-5.14). The tests will also run nightly via a cron-based scheduler in GitHub actions. These scripts will include: 
+* A reusable "Cloning" Script (which can be used by all unit tests) which fetches all repositories required for the unikernel compilation (unikernelLinux/ukl, unikernelLinux/linux, unikernelLinux/Linux-Configs, unikernelLinux/min-initrd, unikernelLinux/glibc, gcc-mirror/gcc) and installs tools needed to build the UKL/run it in QEMU on the machine.
+* A "Unit Tests" Workflow which runs the following test programs in the UKL (inside QEMU). Note: each program runs in parallel as a separate "job" on its own "runner" (a virtual machine hosted by GitHub in Azure)
+  - Boot Test: A simple program that ensures that the UKL can successfully boot in QEMU
+  - LE Bench System Calls Test: A test program which ensures that several common system calls (read, write, etc.) can run successfully in the UKL
+  - Multi-threaded Test: A test program that ensures that a multithreaded application can successfully run in the UKL.
+  - Memcached Test: A unit test which runs memcached in the UKL and tests the ability to set/get key value pairs in this memcached server. This unit test not only tests that memcached can run in the UKL, but also tests UKL networking capabilities.
+
+* A "Configurations Tests" Workflow which individually compiles the UKL with every combination of the following UKL-specific configuration flags (UKL_SAME_STACK, UKL_USE_IST_PF, UKL_USE_RET) and runs the LE Bench System Calls test. Again, each program runs in parallel as a separate "job" on its own "runner" (a virtual machine hosted by GitHub in Azure)
+
+* A "Latency Test" Workflow which compiles a modified version of LE Bench (which reports the time required for each individual system call test in the program) with the UKL and runs it in QEMU. This test has been implemented as a POC and tested on the following types of machines: GitHub-hosted VM (in Azure), self-hosted VM (in the MOC), and a physical server in Cloud Lab. This test has been added to the main unikernelLinux/linux repository, but is currently deactivated (so it does not run automatically). The test can easily be activated should the project secure a server they wish to dedicate to this test.
 
 
 ## 4. Solution Concept
 Global Architecture Description
 Below is a description of the major components of our overall UKL CI system.**
-* GitHub Actions: Triggered by a push or pull request to launch a runner and run CI scripts
+* GitHub Actions: Triggered by a push or pull request (or via a cron-based schedule) to launch a runner and run CI scripts
 * Runner: Server (running Linux) responsible for executing build scripts to clone UKL and dependency repositories, boot QEMU, and run test scripts. Note: currently, we are actually using multiple runners so that different tests can be run independently in parallel.
 
 ![architecture diagram](./images/architecture-diagram.png)
@@ -41,15 +47,14 @@ Below is a description of the major components of our overall UKL CI system.**
                               Figure 1: Basic Overview of Architecture/Workflow
 
 <br></br>
-Figure 1 details the overall architecture and workflow of the UKL CI system. A push or pull request from a user on the unikernelLinux/linux repository (on branch 5.14) will trigger a GitHub action which will launch a Linux-based runner for each test in the CI system. Each runner will subsequently clone all required repositories for building the UKL, install dependencies, and execute a Makefile to build the UKL (and a pre-defined test application) as a bootable kernel image. This kernel image will then be used to boot a QEMU emulator. Test scripts will be executed to check the output of the emulator to ensure that the test program(s) complete successfully.
+Figure 1 details the overall architecture and workflow of the UKL CI system. A push or pull request from a user on the unikernelLinux/linux repository (on branch 5.14) will trigger a GitHub workflow which will launch a Linux-based runner for each test in the CI system (note: our final implementation also triggers workflows nightly via a cron-based scheduler). Each runner will subsequently clone all required repositories for building the UKL, install dependencies, and execute a Makefile to build the UKL (and a pre-defined test application) as a bootable kernel image. This kernel image will then be used to boot a QEMU emulator. Test scripts will be executed to check the output of the emulator to ensure that the test program(s) complete successfully.
 <br></br>
 Design Implications and Discussions
 * Running (most) actions on GitHub Hosted Runners: 
-   * Currently, we plan to execute the majority of our unit tests on runners (machines) provided by GitHub. The principal reason for this design decision is that this will allow us to build a self-contained CI system (ie, not relying on external machines outside of GitHub). GitHub offers unlimited build minutes for public repos (although a job cannot run for more than 6 hours), which should be more than sufficient for our tests (currently, the kernel takes approximately 40 minutes to compile). However the machine memory is capped at 7GB RAM and 14GB SSD, so if additional memory is needed as we would develop new tests, we would need to migrate these test to run on self-hosted runners. Making this change would require us to set-up a 3rd-party VM to handle the Build/Test scripts whenever the GitHub action is triggered and subsequently clean up all created files after the action completes (note: we have implemented this functionality as a Proof of Concept for a "latency test" action which runs on an MOC server). 
+   * The majority of our unit tests on runners (machines) provided by GitHub. The principal reason for this design decision is that this will allow us to build a self-contained CI system (ie, not relying on external machines outside of GitHub). GitHub offers unlimited build minutes for public repos (although a job cannot run for more than 6 hours), which should be more than sufficient for our tests (currently, the kernel takes approximately 40 minutes to compile). However the machine memory is capped at 7GB RAM and 14GB SSD, so if additional memory is needed for future tests, we would need to migrate these test to run on self-hosted runners. Making this change would require us to set-up a 3rd-party VM to handle the Build/Test scripts whenever the GitHub action is triggered and subsequently clean up all created files after the action completes (note: we have implemented this functionality as a Proof of Concept for a "latency test" action which we have tested on both an MOC server and a physical machine in Cloud Lab). 
    * By using GitHub hosted runners, we cannot run QEMU with KVM. This makes QEMU much more slowly. While our mentors have defined this "slow performance" as acceptable for now, we will need to ensure that it does not become an issue later on when we add more tests/compile the UKL with different applications.
    * As would be expected, GitHub-hosted runners do not allow us to test the UKL on bare metal. This is a stretch goal for the project, but should we get to that task, we will need to switch to using the MOC or another source where bare-metal testing is possible.
 
-Note: We are implementing an action (to test latencies) on a self-hosted runner (in the MOC). We plan to review this action with our mentors to see if they would like us to explore running more actions on self-hosted machines.
 
 Repositories:
 
@@ -62,7 +67,7 @@ Minimum acceptance criteria is a CI running in GitHub actions that will test pat
 
 Stretch goals for this project include:
 * Running build/test scripts on runners hosted outside of GitHub (such as at the MOC). This will provide greater flexibility in what type of system that kernel is built on (GitHub is limited to Ubuntu for Linux) and may allow us to test the kernel in bare metal.
-* Testing for performance regressions as patches are pushed to the UKL or introduced via pull request (note: we do not currently have a methodology for doing this, so this will involve additional research should we pursue this goal).
+* Testing for performance regressions as patches are pushed to the UKL or introduced via pull request.
 
 ## 6.  Release Planning:
 ** **
@@ -87,23 +92,26 @@ Implement GitHub Action Workflows to run an initial set of Unit Tests. Each Acti
 
 These tests were first run (and evaluated) in [our fork](https://github.com/whunt1965/linux) of the UKL repo and were added to the main UKL repo on repository on 11/2. The actions can be viewed [here](https://github.com/unikernelLinux/linux/actions)
 
-**Release #4: Target Delivery Date to Main UKL Repo 11/16**
+**Release #4: Implemented in Main UKL Repo on 11/20**
 
-Implement additional unit tests to the workflow. Currently, we have developed 3 new tests: 
+Implement the following additional unit tests to the workflow: 
 * A test program to test the networking capabilities of the UKL. This test runs memcached in the UKL (inside QEMU) and tests whether the "host" runner (the machine in which the workflow is running) can read and write to memcached. 
-* A test program to ensure UKL applications can run multiple threads. This test runs an application which spawns multiple threads (which each perform a simple tasks) and joins them. We then check the output of QEMU to make sure that the test ran successfully. Note: we actually made two versions of this test. The one in our repository currently spawns 100 threads and then joins them (after spawning all threads). Interestingly, we made a second version which spawned each thread individually and then called "join" before spawning another thread. This caused the UKL to exit the main program before the program completed. We've discussed this issue with our mentors a they are currently trying to figure out why the UKL is exiting early in this case.
-* A test program which runs various system calls (based on the lebench test) and measures the time each system call test takes to complete. We then extract these times from the output of QEMU and report them in the action (and terminate the action to report an error if not all tests run). This test is really a proof of concept designed to be run on a self-hosted runner (in the MOC) as this should allow us to have more consistent timing results.
+* A test program to ensure UKL applications can run multiple threads. This test runs an application which spawns multiple threads (which each perform a simple tasks) and joins them. We then check the output of QEMU to make sure that the test ran successfully. 
+* A test program which runs various system calls (based on the lebench test) and measures the time each system call test takes to complete. We then extract these times from the output of QEMU and report them in the action (and terminate the action to report an error if not all tests run). This test is a proof of concept for how latencies may be measured via GitHub actions and was tested on the following different typrs of machines: Github-hosted runner (VM in Azure), self-hosted runner (VM) in MOC, and self-hosted physical server in Cloud Lab. This test was added to the main UKL/linux repository but has been "deactivated" for now as the project does not have a server to dedicate to this test.
 
-These tests are currently being tested in [our forked repository](https://github.com/whunt1965/linux) and will be implemented in the main UKL repository after further testing.
+These tests were first run (and evaluated) in [our forked repository](https://github.com/whunt1965/linux/actions) and have subsequently been implemented in the main unikernelLinux/linux repository [here](https://github.com/unikernelLinux/linux/actions)
 
-**Release #5:**
+**Release #5: All Deliverables to Mentors by 12/8**
 
-For the final release, we plan to have a deeper discussion with our mentors to review our current tests and ensure that we are not missing anything. Currently, we are exploring delivering a system which will compile the UKL with a given application (as long as a UKL-compliant Makefile for the application is provided), but plan to discuss the details of this further with our mentors. In addition, we will prepare documentation (and potentially a video) providing a tutorial on how to use GitHub Actions which can benefit future projects at BU.
+We have now validated and implemented our CI system into the [main UKL repository](https://github.com/unikernelLinux/linux/actions). For the final release, we are preparing the following for our mentors:
+* A simple build script to test compiling/running an application in the UKL (locally):
+  -  This script has been completed and added to a new repository within the project [here](https://github.com/unikernelLinux/ukl-build)
+* Detailed Documentation on our CI System: 
+  - This document has been prepared and is available [here](https://docs.google.com/document/d/1Z_4d2jqxCLBeEnxD1XBRm0rpFu9hvyR41cWowF0U3tY/edit?usp=sharing)
+* Tutorial on GitHub Actions
+  - We have prepared a (short) document providing an overview of GitHub actions and some of the lessons we learned through our project. This document will be provided to both our mentors and the course staff so that future projects may make use of it. 
+  - The document is available [here](https://docs.google.com/document/d/1eRwNx91KCRrCCMc_Dm-kDzRjlQLlbk3zN-vfjNRApLc/edit?usp=sharing)
 
-*In our conversations thus far with our mentor (Richard) he has emphasized the MVP as the most valuable feature. We’ve spoken about the other (stretch) goals, but plan to revisit these with him after delivering the MVP. Based on this conversation, we can subsequently implement whichever features will drive the most value for the UKL project in the time remaining. 
-
-## Computing Resources we may need
-At the moment, we are operating on free-tier virtual machines for testing purposes and our initial plan is to use the machines running in GitHub for production. However, if we need to switch to self-hosted runners, we will need access to virtual machines (running Linux with atleast 20GB RAM which can receive triggers from GitHub actions and subsequently run the all build and test scripts. 
 ** **
 ## Sprint Demo Videos
 
