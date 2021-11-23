@@ -107,10 +107,10 @@ We have now validated and implemented our CI system into the [main UKL repositor
 * A simple build script to test compiling/running an application in the UKL (locally):
   -  This script has been completed and added to a new repository within the project [here](https://github.com/unikernelLinux/ukl-build)
 * Detailed Documentation on our CI System: 
-  - This document has been prepared and is available [here](https://drive.google.com/drive/u/0/folders/1QYZJbnxKFFk1BDBsm6t5EY2wLc1FAJ5e)
+  - This document has been prepared and is available [here](https://drive.google.com/file/d/1A9FgZH2z_6a2OhLThzloncJ8-Cw_VIW9/view?usp=sharing)
 * Tutorial on GitHub Actions
   - We have prepared a (short) document providing an overview of GitHub actions and some of the lessons we learned through our project. This document will be provided to both our mentors and the course staff so that future projects may make use of it. 
-  - The document is available [here](https://drive.google.com/drive/u/0/folders/1QYZJbnxKFFk1BDBsm6t5EY2wLc1FAJ5e)
+  - The document is available [here](https://drive.google.com/file/d/1EzBzWF8HaBPzDV7etRpRBnJh6UTzIvAB/view?usp=sharing)
 
 ** **
 ## Sprint Demo Videos
