@@ -85,9 +85,9 @@ Stretch goals for this project include:
 ## 6. Project Task Board, Repositories, and Sprint Videos
 * Our Taiga Board can be found [here](https://tree.taiga.io/project/anqianqi1-csec528-fall-21-a-ci-for-development-of-ukl/timeline)
 
-* CI testing and development was performed in our [fork of the UKL repo](https://github.com/whunt1965/linux)
+* CI testing and development was performed in our [fork of the UKL repo](https://github.com/whunt1965/linux/tree/ukl-5.14/.github/workflows)
 
-* Completed Workflows are available in the [main UKL repo](https://github.com/unikernelLinux/linux)
+* Completed Workflows are available in the [main UKL repo](https://github.com/unikernelLinux/linux/tree/ukl-5.14/.github/workflows)
 
 * Sprint Demo Videos
   - Sprint 1: https://drive.google.com/file/d/1uyXb03ig_F_Q8udL5lgs5sNOPHZjnRgZ/view?usp=sharing
