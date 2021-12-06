@@ -144,7 +144,7 @@ These tests were first run (and evaluated) in [our forked repository](https://gi
 
 ### Release #5: Final Deliverables
 
-***Target Delivery Date to Mentors: 11/29***
+***All Deliverables provided to Mentors by 11/29***
 
 We have now validated and implemented our CI system into the [main UKL repository](https://github.com/unikernelLinux/linux/actions). For the final release, we are preparing the following for our mentors:
 * A simple build script to test compiling/running an application in the UKL (locally):
