@@ -96,6 +96,8 @@ Stretch goals for this project include:
   - Sprint 4: https://drive.google.com/file/d/1D601Hhs6gQDGnI2LJIvR5eQfntei2Qeu/view?usp=sharing
   - Sprint 5: https://drive.google.com/file/d/1MqF_6at1HVH_peVMaq6H9_b3S3NzCuok/view?usp=sharing
 
+* [Final Project Video](https://drive.google.com/file/d/1NI_V5mR4Kpratxr5pigb9riXKK9Ufupf/view?usp=sharing)
+
 ** **
 ## 7.  Release Planning:
 
