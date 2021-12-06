@@ -74,7 +74,7 @@ However, there are a few limitations to using GitHub-hosted runners, which are d
 In order to support any future testing on non-GitHub machines, we did experiment with running our Latency Test as a Proof of Concept on self-hosted runners in both the MOC (on a VM) and in Cloud Lab (on a physical machine). We've added this Latency Test workflow to the [main UKL development repository](https://github.com/unikernelLinux/linux/actions), but have deactivated it (so it will not run) for now. In addition, we have provided documentation to our mentors for setting up self-hosted runners should this be required in the future.
 
 ** **
-## 5. Acceptance criteria
+## 5. Acceptance Criteria
 Minimum acceptance criteria is a CI running in GitHub actions that will test patches pushed to the UKL repository (or initiated via pull requests) by building the UKL, booting QEMU, and running test programs to alert the user if the patch breaks the code.
 
 Stretch goals for this project include:
