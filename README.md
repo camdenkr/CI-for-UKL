@@ -171,8 +171,8 @@ We have now validated and implemented our CI system into the [main UKL repositor
 
 ### Additional Deliverables
 In addition to the code we developed for the CI System, we have produced 2 separate additional written deliverables for this project.
-* Detailed Project Documentation for our CI system can be found [here](https://drive.google.com/file/d/1A9FgZH2z_6a2OhLThzloncJ8-Cw_VIW9/view?usp=sharing)
-* An overview of GitHub Actions (and tips for usage) can be found [here](https://drive.google.com/file/d/1EzBzWF8HaBPzDV7etRpRBnJh6UTzIvAB/view?usp=sharing)
+* Detailed Project Documentation for our CI system can be found [here](https://drive.google.com/file/d/1Lkeatp7DO-NisB9LbFAbFZslTLSR46VS/view?usp=sharing)
+* An overview of GitHub Actions (and tips for usage) can be found [here](https://drive.google.com/file/d/1tOpIzRlIpFK9JWvsM9IXj8baPBqlAENB/view?usp=sharing)
 
 ### Instructions for Running/Testing
 As this system is designed to be run in GitHub actions, it unfortunately cannot be downloaded and run on a local machine. However, we provide instructions below which can be used to run our system/test its functionality via GitHub. 
