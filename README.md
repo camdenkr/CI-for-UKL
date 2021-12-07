@@ -167,12 +167,12 @@ We have now validated and implemented our CI system into the [main UKL repositor
     -  Our branch (actions-files) of the unikernelLinux/min-initrd repository may be found [here](https://github.com/unikernelLinux/min-initrd/tree/actions-files). This repository contains a Makefile and scripts used by the workflows for building the root file system and running the UKL in QEMU. 
     -  Note: We have implemented our actions files as separate branches in these repositories to prevent conflicts with our mentors' own development files, especially since many of the files in these repositories had to be modified to run on Ubuntu (which is the Linux distribution used by GitHub-hosted runners).
 
-* Full details on the our workflow and test files (as well the modifications we made to existing UKL dependency build files) may be found in our UKL Project Documentation [here](https://drive.google.com/file/d/1A9FgZH2z_6a2OhLThzloncJ8-Cw_VIW9/view?usp=sharing).
+* Full details on the our workflow and test files (as well the modifications we made to existing UKL dependency build files) may be found in our UKL Project Documentation [here](./Deliverable_Documents/Project_Documentation.pdf).
 
 ### Additional Deliverables
 In addition to the code we developed for the CI System, we have produced 2 separate additional written deliverables for this project.
-* Detailed Project Documentation for our CI system can be found [here](https://drive.google.com/file/d/1Lkeatp7DO-NisB9LbFAbFZslTLSR46VS/view?usp=sharing)
-* An overview of GitHub Actions (and tips for usage) can be found [here](https://drive.google.com/file/d/1tOpIzRlIpFK9JWvsM9IXj8baPBqlAENB/view?usp=sharing)
+* Detailed Project Documentation for our CI system can be found [here](./Deliverable_Documents/Project_Documentation.pdf)
+* An overview of GitHub Actions (and tips for usage) can be found [here](./Deliverable_Documents/GitHub_Actions_Tutorial.pdf)
 
 ### Instructions for Running/Testing
 As this system is designed to be run in GitHub actions, it unfortunately cannot be downloaded and run on a local machine. However, we provide instructions below which can be used to run our system/test its functionality via GitHub. 
