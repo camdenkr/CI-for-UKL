@@ -7,6 +7,12 @@ Project Members:
 - Camden Kronhaus | kronhaus@bu.edu  
 - Samantha Puterman | samanpg@bu.edu  
 
+Project Mentors:
+- Richard Jones
+- Ali Raza
+- Eric Munson
+- Tommy Unger
+
 ## 1. Vision and Goals Of The Project:
 
 The UKL CI will provide a testing system to support continuous integration for the development of the Linux unikernel (UKL) open source project. High-level goals of this project include:  
